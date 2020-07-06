@@ -1,2 +1,2 @@
 # commons-settings
-Classes for settings configuration
+Helper classes for settings configuration on Gloobox Capturer
