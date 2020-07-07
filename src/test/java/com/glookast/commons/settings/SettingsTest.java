@@ -47,12 +47,12 @@ class SettingsTest {
         String json = "{\n" +
                 "  \"general\": {\n" +
                 "    \"language\": {\n" +
-                "      \"selected\": \"ja\"\n" +
+                "      \"value\": \"ja\"\n" +
                 "    }\n" +
                 "  },\n" +
                 "  \"network\": {\n" +
                 "    \"hostIpAddress\": {\n" +
-                "      \"selected\": \"192.168.5.128\",\n" +
+                "      \"value\": \"192.168.5.128\",\n" +
                 "      \"default\": \"127.0.0.1\",\n" +
                 "      \"options\": [\n" +
                 "        \"127.0.0.1\",\n" +

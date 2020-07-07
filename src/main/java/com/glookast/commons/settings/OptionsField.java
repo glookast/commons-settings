@@ -1,5 +1,6 @@
 package com.glookast.commons.settings;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -13,9 +14,10 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class OptionsField<T> {
 
-    @JsonProperty("selected")
+    @JsonProperty("value")
     @NonNull
     public T selectedValue;
 

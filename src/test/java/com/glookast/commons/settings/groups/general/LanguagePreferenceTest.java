@@ -18,7 +18,7 @@ class LanguagePreferenceTest {
 
         ObjectMapper mapper = new ObjectMapper();
         LanguagePreference languagePreference = mapper
-                .readValue("{\"selected\":\"some language\"}", LanguagePreference.class);
+                .readValue("{\"value\":\"some language\"}", LanguagePreference.class);
         assertNotNull(languagePreference);
         assertEquals("some language", languagePreference.selectedValue.toString());
 
@@ -34,7 +34,7 @@ class LanguagePreferenceTest {
                 "        \"B\",\n" +
                 "        \"C\"\n" +
                 "      ],\n" +
-                "      \"selected\": \"some language\",\n" +
+                "      \"value\": \"some language\",\n" +
                 "      \"default\": \"Z\"\n" +
                 "    }", LanguagePreference.class);
         assertNotNull(languagePreference);
@@ -59,7 +59,7 @@ class LanguagePreferenceTest {
         String json = mapper.writeValueAsString(languagePreference);
         assertNotNull(json);
 
-        assertEquals(mapper.readTree("{\"selected\":\"some language\"}"), mapper.readTree(json));
+        assertEquals(mapper.readTree("{\"value\":\"some language\"}"), mapper.readTree(json));
 
         LanguagePreference settingsFromJSON = mapper.readValue(json, LanguagePreference.class);
         assertNotNull(settingsFromJSON);
