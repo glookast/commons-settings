@@ -122,7 +122,7 @@ class MetadataSettingsGroupTest {
                 "    }\n" +
                 "  ],\n" +
                 "  \"xmlExportEnabled\": true,\n" +
-                "  \"xmlExportXSLTFilePath\": \"/this/is/a/path\"\n" +
+                "  \"xmlExportXSLTFilePath\": \"/this/is/not/a/path\"\n" +
                 "}"), mapper.readTree(json));
 
         MetadataSettingsGroup settingsFromJSON = mapper.readValue(json, MetadataSettingsGroup.class);
