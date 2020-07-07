@@ -1,23 +1,14 @@
 package com.glookast.commons.settings.groups.network;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import com.glookast.commons.settings.OptionsField;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import java.util.Collections;
-import java.util.List;
-
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder(toBuilder = true)
-public class HostIpAddressSetting {
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+public class HostIpAddressSetting extends OptionsField<String> {
 
-    @Builder.Default
-    private String selected = "127.0.0.1";
-
-    @Builder.Default
-    private List<String> options = Collections.singletonList("127.0.0.1");
 
 }

@@ -1,10 +1,12 @@
 package com.glookast.commons.settings;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.glookast.commons.settings.groups.general.LanguageSetting;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class SettingsTest {
 
     @Test
-    public void toJSON() throws JsonProcessingException {
+    public void toJSON_empty_settings() throws JsonProcessingException {
 
         Settings settings = Settings.builder().build();
 
@@ -20,27 +22,7 @@ class SettingsTest {
         String json = mapper.writeValueAsString(settings);
         assertNotNull(json);
 
-        JsonNode jsonNode = mapper.readTree("{\n" +
-                "  \"general\": {\n" +
-                "    \"language\": {\n" +
-                "      \"selected\": \"EN_GB\",\n" +
-                "      \"options\": [\n" +
-                "        \"EN_GB\",\n" +
-                "        \"PT_PT\",\n" +
-                "        \"JA_JP\"\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  },\n" +
-                "  \"network\": {\n" +
-                "    \"hostIpAddress\": {\n" +
-                "      \"selected\": \"127.0.0.1\",\n" +
-                "      \"options\": [\n" +
-                "        \"127.0.0.1\"\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  }\n" +
-                "}");
-        assertEquals(mapper.readTree(json), mapper.readTree(String.valueOf(jsonNode)));
+        assertEquals(mapper.readTree("{\"type\":\"Settings\"}"), mapper.readTree(json));
 
         // parse the resulting JSON into equivalent settings object
         Settings settingsFromJSON = mapper.readValue(json, Settings.class);
@@ -65,19 +47,16 @@ class SettingsTest {
         String json = "{\n" +
                 "  \"general\": {\n" +
                 "    \"language\": {\n" +
-                "      \"selected\": \"ja_JP\",\n" +
-                "      \"options\": [\n" +
-                "        \"EN_GB\",\n" +
-                "        \"PT_PT\",\n" +
-                "        \"JA_JP\"\n" +
-                "      ]\n" +
+                "      \"selected\": \"ja\"\n" +
                 "    }\n" +
                 "  },\n" +
                 "  \"network\": {\n" +
                 "    \"hostIpAddress\": {\n" +
-                "      \"selected\": \"127.0.0.1\",\n" +
+                "      \"selected\": \"192.168.5.128\",\n" +
+                "      \"default\": \"127.0.0.1\",\n" +
                 "      \"options\": [\n" +
-                "        \"127.0.0.1\"\n" +
+                "        \"127.0.0.1\",\n" +
+                "        \"192.168.5.128\"\n" +
                 "      ]\n" +
                 "    }\n" +
                 "  }\n" +
@@ -86,7 +65,10 @@ class SettingsTest {
         ObjectMapper mapper = new ObjectMapper();
         Settings settings = mapper.readValue(json, Settings.class);
         assertNotNull(settings);
-        assertEquals(settings.getGeneral().getLanguage().getSelected(), LanguageSetting.Option.JA_JP);
+        assertEquals(new Locale.Builder().setLanguage("ja").build(), settings.getGeneral().getLanguage().getSelectedValue());
+        assertEquals("192.168.5.128", settings.getNetwork().getHostIpAddress().getSelectedValue());
+        assertEquals("127.0.0.1", settings.getNetwork().getHostIpAddress().getDefaultValue());
+        assertEquals(new HashSet<>(Arrays.asList("127.0.0.1", "192.168.5.128")), settings.getNetwork().getHostIpAddress().getOptions());
 
     }
 

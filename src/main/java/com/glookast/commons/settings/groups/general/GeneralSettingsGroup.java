@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class GeneralSettingsGroup {
 
-    @Builder.Default
-    private LanguageSetting language = LanguageSetting.builder().build();
+    private LanguagePreference language;
 
 }

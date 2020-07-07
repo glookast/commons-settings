@@ -1,6 +1,7 @@
 package com.glookast.commons.settings;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.glookast.commons.settings.groups.general.GeneralSettingsGroup;
 import com.glookast.commons.settings.groups.network.NetworkSettingsGroup;
 import lombok.AllArgsConstructor;
@@ -13,13 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, defaultImpl = Settings.class, property = "type")
 public class Settings {
 
-    @Builder.Default
-    private GeneralSettingsGroup general = GeneralSettingsGroup.builder().build();
+    private GeneralSettingsGroup general;
 
-    @Builder.Default
-    private NetworkSettingsGroup network = NetworkSettingsGroup.builder().build();
+    private NetworkSettingsGroup network;
 
 }

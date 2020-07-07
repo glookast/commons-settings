@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class NetworkSettingsGroup {
 
-    @Builder.Default
-    private HostIpAddressSetting hostIpAddress = HostIpAddressSetting.builder().build();
+    private HostIpAddressSetting hostIpAddress;
 
 }
