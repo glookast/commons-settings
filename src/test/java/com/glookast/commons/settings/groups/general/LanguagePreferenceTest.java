@@ -14,6 +14,60 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class LanguagePreferenceTest {
 
     @Test
+    public void fromJSON_required() throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        LanguagePreference languagePreference = mapper
+                .readValue("{\"selected\":\"some language\"}", LanguagePreference.class);
+        assertNotNull(languagePreference);
+        assertEquals("some language", languagePreference.selectedValue.toString());
+
+    }
+
+    @Test
+    public void fromJSON() throws JsonProcessingException {
+
+        ObjectMapper mapper = new ObjectMapper();
+        LanguagePreference languagePreference = mapper.readValue("{\n" +
+                "      \"options\": [\n" +
+                "        \"A\",\n" +
+                "        \"B\",\n" +
+                "        \"C\"\n" +
+                "      ],\n" +
+                "      \"selected\": \"some language\",\n" +
+                "      \"default\": \"Z\"\n" +
+                "    }", LanguagePreference.class);
+        assertNotNull(languagePreference);
+        assertEquals("some language", languagePreference.selectedValue.toString());
+        assertEquals(new HashSet<>(
+                        Arrays.asList(
+                                new Locale("A"),
+                                new Locale("B"),
+                                new Locale("C"))),
+                languagePreference.options);
+        assertEquals(new Locale("Z"), languagePreference.defaultValue);
+
+    }
+
+    @Test
+    public void toJSON_required() throws JsonProcessingException {
+
+        LanguagePreference languagePreference = LanguagePreference.builder()
+                .selectedValue(new Locale("some language"))
+                .build();
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(languagePreference);
+        assertNotNull(json);
+
+        assertEquals(mapper.readTree("{\"selected\":\"some language\"}"), mapper.readTree(json));
+
+        LanguagePreference settingsFromJSON = mapper.readValue(json, LanguagePreference.class);
+        assertNotNull(settingsFromJSON);
+        assertEquals(languagePreference, settingsFromJSON);
+
+    }
+
+    @Test
     public void toJSON_include_options() throws JsonProcessingException {
 
         LanguagePreference languagePreference = LanguagePreference.builder()
