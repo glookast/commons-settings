@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -72,7 +71,7 @@ class MetadataSettingsGroupTest {
                 .fields(metadataFields)
                 .defaultFields(defaultMetadataFields)
                 .xmlExportEnabled(true)
-                .xmlExportXSLTFilePath(Paths.get("/", "path", "to", "a", "file"))
+                .xmlExportXSLTFilePath("/this/is/a/path")
                 .build();
 
         ObjectMapper mapper = new ObjectMapper();
