@@ -53,7 +53,7 @@ class CaptureSettingsGroupTest {
     }
 
     @Test
-    public void toJSON_includingPaths() throws JsonProcessingException {
+    public void toJSON_includingChannelInputs() throws JsonProcessingException {
 
         CaptureSettingsGroup captureSettingsGroup = CaptureSettingsGroup.builder()
                 .captureCard(CaptureCard.builder().selectedValue("Physical").build())
@@ -62,15 +62,18 @@ class CaptureSettingsGroupTest {
                 .gangRollControlDelayInFrames(40)
                 .headFrameOffset(1)
                 .AJA4kInputMode(AJA4kInputMode.builder().selectedValue("Square").build())
-                .channelMXFInputs(
+                .channelInputs(
                         new HashSet<>(
                                 Arrays.asList(
-                                        ChannelInput.<MXFInput>builder().channel(1).input(
-                                                MXFInput.builder().path("/this/is/a/path").build()
-                                        ).build(),
-                                        ChannelInput.<MXFInput>builder().channel(2).input(
-                                                MXFInput.builder().path("/this/is/another/path").build()
-                                        ).build())))
+                                        ChannelInput.builder()
+                                                .channel(1)
+                                                .inputURI("/this/is/a/path")
+                                                .build(),
+                                        ChannelInput.builder()
+                                                .channel(2)
+                                                .inputURI("/this/is/another/path")
+                                                .build()
+                                )))
                 .build();
 
         ObjectMapper mapper = new ObjectMapper();
@@ -87,18 +90,14 @@ class CaptureSettingsGroupTest {
                 "  \"gangRollControlDelayInFrames\": 40,\n" +
                 "  \"transcodeSecondaryResolutionsWhileIngesting\": false,\n" +
                 "  \"headFrameOffset\": 1,\n" +
-                "  \"channelMXFInputs\": [\n" +
-                "    {\n" +
-                "      \"channel\": 1,\n" +
-                "      \"input\": {\n" +
-                "        \"path\": \"/this/is/a/path\"\n" +
-                "      }\n" +
-                "    },\n" +
+                "  \"channelInputs\": [\n" +
                 "    {\n" +
                 "      \"channel\": 2,\n" +
-                "      \"input\": {\n" +
-                "        \"path\": \"/this/is/another/path\"\n" +
-                "      }\n" +
+                "      \"inputURI\": \"/this/is/another/path\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"channel\": 1,\n" +
+                "      \"inputURI\": \"/this/is/a/path\"\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"LTCTimecodeSource\": {\n" +

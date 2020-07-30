@@ -7,7 +7,7 @@ apply plugin: "maven"
 apply plugin: "signing"
 
 group = "com.glookast.settings"
-version = "0.1.0-SNAPSHOT"
+version = "0.2.0-SNAPSHOT"
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -67,6 +67,16 @@ task javadocJar(type: Jar) {
 task sourcesJar(type: Jar) {
     classifier = "sources"
     from sourceSets.main.allSource
+}
+
+task tagRelease(type: Exec) {
+    commandLine "git"
+    args "tag", "-a", "$version", "-m", "Created release $version"
+}
+
+task untagRelease(type: Exec) {
+    commandLine "git"
+    args "tag", "-d", "$version"
 }
 
 artifacts {

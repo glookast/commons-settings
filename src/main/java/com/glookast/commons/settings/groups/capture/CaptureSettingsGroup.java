@@ -39,8 +39,6 @@ public class CaptureSettingsGroup {
     @JsonProperty("AJA4kInputMode")
     private AJA4kInputMode AJA4kInputMode;
 
-    private Set<ChannelInput<MXFInput>> channelMXFInputs;
-
-    private Set<ChannelInput<NDIInput>> channelNDIInputs;
+    private Set<ChannelInput> channelInputs;
 
 }

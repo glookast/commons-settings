@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ChannelInput<T> {
+public class ChannelInput {
 
     private Integer channel;
 
-    private T input;
+    private String inputURI;
 
 
 }
