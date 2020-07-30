@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.glookast.commons.settings.groups.capture.CaptureSettingsGroup;
 import com.glookast.commons.settings.groups.general.GeneralSettingsGroup;
+import com.glookast.commons.settings.groups.loop_record.LoopRecordSettingsGroup;
 import com.glookast.commons.settings.groups.metadata.MetadataSettingsGroup;
 import com.glookast.commons.settings.groups.network.NetworkSettingsGroup;
 import lombok.AllArgsConstructor;
@@ -26,5 +27,7 @@ public class Settings {
     private NetworkSettingsGroup network;
 
     private CaptureSettingsGroup capture;
+
+    private LoopRecordSettingsGroup loopRecord;
 
 }
