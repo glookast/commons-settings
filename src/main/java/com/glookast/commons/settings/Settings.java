@@ -2,6 +2,7 @@ package com.glookast.commons.settings;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.glookast.commons.settings.groups.background_transfer.BackgroundTransferGroup;
 import com.glookast.commons.settings.groups.capture.CaptureSettingsGroup;
 import com.glookast.commons.settings.groups.general.GeneralSettingsGroup;
 import com.glookast.commons.settings.groups.loop_record.LoopRecordSettingsGroup;
@@ -29,5 +30,7 @@ public class Settings {
     private CaptureSettingsGroup capture;
 
     private LoopRecordSettingsGroup loopRecord;
+
+    private BackgroundTransferGroup backgroundTransfer;
 
 }
