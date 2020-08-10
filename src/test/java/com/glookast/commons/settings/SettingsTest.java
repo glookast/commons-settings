@@ -8,6 +8,7 @@ import com.glookast.commons.settings.groups.background_transfer.StreamingBitRate
 import com.glookast.commons.settings.groups.media_processor.MP4MuxerCompatibilityMode;
 import com.glookast.commons.settings.groups.media_processor.MediaProcessorGroup;
 import com.glookast.commons.settings.groups.processes_settings.ProcessesSettingsGroup;
+import com.glookast.commons.settings.groups.storage_manager.StorageManagerGroup;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -209,6 +210,36 @@ class SettingsTest {
                 "    \"serialControlServiceEnabled\": true,\n" +
                 "    \"SDIPlayerEnabled\": true,\n" +
                 "    \"VTRControllerEnabled\": true\n" +
+                "  }\n" +
+                "}"), mapper.readTree(json));
+
+        Settings settingsFromJSON = mapper.readValue(json, Settings.class);
+        assertNotNull(settingsFromJSON);
+        assertEquals(settings, settingsFromJSON);
+
+    }
+
+    @Test
+    public void toJSON_include_storage_manager() throws JsonProcessingException {
+
+        StorageManagerGroup storageManagerGroup = StorageManagerGroup.builder()
+                .fileSystemEventsProcessingEnabled(false)
+                .storageManagerRefreshIntervalInSeconds(6)
+                .build();
+
+        Settings settings = Settings.builder()
+                .storageManager(storageManagerGroup)
+                .build();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(settings);
+        assertNotNull(json);
+
+        assertEquals(mapper.readTree("{\n" +
+                "  \"type\": \"Settings\",\n" +
+                "  \"storageManager\": {\n" +
+                "    \"fileSystemEventsProcessingEnabled\": false,\n" +
+                "    \"storageManagerRefreshIntervalInSeconds\": 6\n" +
                 "  }\n" +
                 "}"), mapper.readTree(json));
 
