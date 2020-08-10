@@ -14,17 +14,17 @@ import lombok.*;
 public class MediaProcessorGroup {
 
     @Builder.Default
-    private Boolean enabledFragmentedMP4 = false;
+    private Boolean fragmentedMP4Enabled = false;
 
     @NonNull
     @JsonProperty("MP4MuxerCompatibilityMode")
     private MP4MuxerCompatibilityMode mp4MuxerCompatibilityMode;
 
     @Builder.Default
-    private Boolean userUMIDInMXForMP4OutputFilename = false;
+    private Boolean userUMIDInMXForMP4OutputFilenameEnabled = false;
 
     @Builder.Default
-    private Boolean aggregateAllMP4AudioChannels = false;
+    private Boolean aggregateAllMP4AudioChannelsEnabled = false;
 
     @Builder.Default
     private Integer refreshPeriodInSecondsForMOVGrowing = 0;

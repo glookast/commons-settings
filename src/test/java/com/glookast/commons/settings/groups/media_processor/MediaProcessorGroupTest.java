@@ -26,9 +26,9 @@ class MediaProcessorGroupTest {
         assertNotNull(json);
 
         assertEquals(mapper.readTree("{\n" +
-                "  \"enabledFragmentedMP4\": false,\n" +
-                "  \"userUMIDInMXForMP4OutputFilename\": false,\n" +
-                "  \"aggregateAllMP4AudioChannels\": false,\n" +
+                "  \"fragmentedMP4Enabled\": false,\n" +
+                "  \"userUMIDInMXForMP4OutputFilenameEnabled\": false,\n" +
+                "  \"aggregateAllMP4AudioChannelsEnabled\": false,\n" +
                 "  \"refreshPeriodInSecondsForMOVGrowing\": 0,\n" +
                 "  \"MP4MuxerCompatibilityMode\": {\n" +
                 "    \"value\": \"STANDARD\"\n" +
@@ -45,14 +45,14 @@ class MediaProcessorGroupTest {
     public void toJSON() throws JsonProcessingException {
 
         MediaProcessorGroup mediaProcessorGroup = MediaProcessorGroup.builder()
-                .enabledFragmentedMP4(true)
+                .fragmentedMP4Enabled(true)
                 .mp4MuxerCompatibilityMode(MP4MuxerCompatibilityMode.builder()
                         .options(new HashSet<>(Arrays.asList("STANDARD", "SONY_PSP")))
                         .selectedValue("STANDARD")
                         .defaultValue("STANDARD")
                         .build())
-                .userUMIDInMXForMP4OutputFilename(true)
-                .aggregateAllMP4AudioChannels(true)
+                .userUMIDInMXForMP4OutputFilenameEnabled(true)
+                .aggregateAllMP4AudioChannelsEnabled(true)
                 .refreshPeriodInSecondsForMOVGrowing(10)
                 .build();
 
@@ -61,9 +61,9 @@ class MediaProcessorGroupTest {
         assertNotNull(json);
 
         assertEquals(mapper.readTree("{\n" +
-                "  \"enabledFragmentedMP4\": true,\n" +
-                "  \"userUMIDInMXForMP4OutputFilename\": true,\n" +
-                "  \"aggregateAllMP4AudioChannels\": true,\n" +
+                "  \"fragmentedMP4Enabled\": true,\n" +
+                "  \"userUMIDInMXForMP4OutputFilenameEnabled\": true,\n" +
+                "  \"aggregateAllMP4AudioChannelsEnabled\": true,\n" +
                 "  \"refreshPeriodInSecondsForMOVGrowing\": 10,\n" +
                 "  \"MP4MuxerCompatibilityMode\": {\n" +
                 "    \"options\": [\n" +
