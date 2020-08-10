@@ -6,6 +6,7 @@ import com.glookast.commons.settings.groups.background_transfer.BackgroundTransf
 import com.glookast.commons.settings.groups.capture.CaptureSettingsGroup;
 import com.glookast.commons.settings.groups.general.GeneralSettingsGroup;
 import com.glookast.commons.settings.groups.loop_record.LoopRecordSettingsGroup;
+import com.glookast.commons.settings.groups.media_processor.MediaProcessorGroup;
 import com.glookast.commons.settings.groups.metadata.MetadataSettingsGroup;
 import com.glookast.commons.settings.groups.network.NetworkSettingsGroup;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,7 @@ public class Settings {
     private LoopRecordSettingsGroup loopRecord;
 
     private BackgroundTransferGroup backgroundTransfer;
+
+    private MediaProcessorGroup mediaProcessor;
 
 }

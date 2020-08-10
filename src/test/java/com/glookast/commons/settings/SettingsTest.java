@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.glookast.commons.settings.groups.background_transfer.BackgroundTransferGroup;
 import com.glookast.commons.settings.groups.background_transfer.NoSignalPolicy;
 import com.glookast.commons.settings.groups.background_transfer.StreamingBitRate;
+import com.glookast.commons.settings.groups.media_processor.MP4MuxerCompatibilityMode;
+import com.glookast.commons.settings.groups.media_processor.MediaProcessorGroup;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -127,6 +129,53 @@ class SettingsTest {
                 "    },\n" +
                 "    \"externalImageURI\": \"external/image.jpg\",\n" +
                 "    \"defaultExternalImageURI\": \"default/external/image.jpg\"\n" +
+                "  }\n" +
+                "}"), mapper.readTree(json));
+
+        Settings settingsFromJSON = mapper.readValue(json, Settings.class);
+        assertNotNull(settingsFromJSON);
+        assertEquals(settings, settingsFromJSON);
+
+    }
+
+    @Test
+    public void toJSON_include_media_processor() throws JsonProcessingException {
+
+        MediaProcessorGroup mediaProcessorGroup = MediaProcessorGroup.builder()
+                .enabledFragmentedMP4(true)
+                .mp4MuxerCompatibilityMode(MP4MuxerCompatibilityMode.builder()
+                        .options(new HashSet<>(Arrays.asList("STANDARD", "SONY_PSP")))
+                        .selectedValue("STANDARD")
+                        .defaultValue("STANDARD")
+                        .build())
+                .userUMIDInMXForMP4OutputFilename(true)
+                .aggregateAllMP4AudioChannels(true)
+                .refreshPeriodInSecondsForMOVGrowing(10)
+                .build();
+
+        Settings settings = Settings.builder()
+                .mediaProcessor(mediaProcessorGroup)
+                .build();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(settings);
+        assertNotNull(json);
+
+        assertEquals(mapper.readTree("{\n" +
+                "  \"type\": \"Settings\",\n" +
+                "  \"mediaProcessor\": {\n" +
+                "    \"enabledFragmentedMP4\": true,\n" +
+                "    \"userUMIDInMXForMP4OutputFilename\": true,\n" +
+                "    \"aggregateAllMP4AudioChannels\": true,\n" +
+                "    \"refreshPeriodInSecondsForMOVGrowing\": 10,\n" +
+                "    \"MP4MuxerCompatibilityMode\": {\n" +
+                "      \"options\": [\n" +
+                "        \"STANDARD\",\n" +
+                "        \"SONY_PSP\"\n" +
+                "      ],\n" +
+                "      \"value\": \"STANDARD\",\n" +
+                "      \"default\": \"STANDARD\"\n" +
+                "    }\n" +
                 "  }\n" +
                 "}"), mapper.readTree(json));
 
