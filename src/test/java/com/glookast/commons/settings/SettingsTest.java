@@ -8,12 +8,11 @@ import com.glookast.commons.settings.groups.background_transfer.StreamingBitRate
 import com.glookast.commons.settings.groups.media_processor.MP4MuxerCompatibilityMode;
 import com.glookast.commons.settings.groups.media_processor.MediaProcessorGroup;
 import com.glookast.commons.settings.groups.processes_settings.ProcessesSettingsGroup;
+import com.glookast.commons.settings.groups.service_settings.*;
 import com.glookast.commons.settings.groups.storage_manager.StorageManagerGroup;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -240,6 +239,129 @@ class SettingsTest {
                 "  \"storageManager\": {\n" +
                 "    \"fileSystemEventsProcessingEnabled\": false,\n" +
                 "    \"storageManagerRefreshIntervalInSeconds\": 6\n" +
+                "  }\n" +
+                "}"), mapper.readTree(json));
+
+        Settings settingsFromJSON = mapper.readValue(json, Settings.class);
+        assertNotNull(settingsFromJSON);
+        assertEquals(settings, settingsFromJSON);
+
+    }
+
+    @Test
+    public void toJSON_include_service_settings() throws JsonProcessingException {
+
+        Set<String> priorityOptions = new LinkedHashSet<>(); // preserve insertion order
+        priorityOptions.add("Not Specified");
+        priorityOptions.add("REALTIME");
+        priorityOptions.add("HIGH");
+        priorityOptions.add("ABOVE NORMAL");
+        priorityOptions.add("NORMAL");
+        priorityOptions.add("BELOW NORMAL");
+        priorityOptions.add("IDLE");
+
+        ServiceSettingsChannelConfiguration channelConfiguration = ServiceSettingsChannelConfiguration.builder()
+                .channel(1)
+                .captureConfiguration(ProcessorConfiguration.builder()
+                        .groupAffinity(GroupAffinity.builder()
+                                .selectedValue("Group 0")
+                                .build())
+                        .selectedCPUs(new TreeSet<>(Arrays.asList(1, 3, 5)))
+                        .processorAffinityMask("Default")
+                        .priority(ProcessorPriority.builder()
+                                .options(priorityOptions)
+                                .selectedValue("NORMAL")
+                                .defaultValue("NORMAL")
+                                .build())
+                        .build())
+                .ingestConfiguration(ProcessorConfiguration.builder()
+                        .groupAffinity(GroupAffinity.builder()
+                                .selectedValue("Group 0")
+                                .build())
+                        .selectedCPUs(new TreeSet<>(Arrays.asList(2, 6, 7)))
+                        .processorAffinityMask("Default")
+                        .priority(ProcessorPriority.builder()
+                                .options(priorityOptions)
+                                .selectedValue("NORMAL")
+                                .defaultValue("NORMAL")
+                                .build())
+                        .build())
+                .build();
+
+        ServiceSettingsGroup serviceSettingsGroup = ServiceSettingsGroup.builder()
+                .channelConfigurations(new TreeSet<>(Collections.singletonList(
+                        channelConfiguration
+                )))
+                .numberOfCPUs(8)
+                .build();
+
+        Settings settings = Settings.builder()
+                .serviceSettings(serviceSettingsGroup)
+                .build();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(settings);
+        assertNotNull(json);
+
+        assertEquals(mapper.readTree("{\n" +
+                "  \"type\": \"Settings\",\n" +
+                "  \"serviceSettings\": {\n" +
+                "    \"channelConfigurations\": [\n" +
+                "      {\n" +
+                "        \"channel\": 1,\n" +
+                "        \"captureConfiguration\": {\n" +
+                "          \"groupAffinity\": {\n" +
+                "            \"value\": \"Group 0\"\n" +
+                "          },\n" +
+                "          \"selectedCPUs\": [\n" +
+                "            1,\n" +
+                "            3,\n" +
+                "            5\n" +
+                "          ],\n" +
+                "          \"processorAffinityMask\": \"Default\",\n" +
+                "          \"priority\": {\n" +
+                "            \"options\": [\n" +
+                "              \"Not Specified\",\n" +
+                "              \"REALTIME\",\n" +
+                "              \"HIGH\",\n" +
+                "              \"ABOVE NORMAL\",\n" +
+                "              \"NORMAL\",\n" +
+                "              \"BELOW NORMAL\",\n" +
+                "              \"IDLE\"\n" +
+                "            ],\n" +
+                "            \"value\": \"NORMAL\",\n" +
+                "            \"default\": \"NORMAL\"\n" +
+                "          }\n" +
+                "        },\n" +
+                "        \"ingestConfiguration\": {\n" +
+                "          \"groupAffinity\": {\n" +
+                "            \"value\": \"Group 0\"\n" +
+                "          },\n" +
+                "          \"selectedCPUs\": [\n" +
+                "            2,\n" +
+                "            6,\n" +
+                "            7\n" +
+                "          ],\n" +
+                "          \"processorAffinityMask\": \"Default\",\n" +
+                "          \"priority\": {\n" +
+                "            \"options\": [\n" +
+                "              \"Not Specified\",\n" +
+                "              \"REALTIME\",\n" +
+                "              \"HIGH\",\n" +
+                "              \"ABOVE NORMAL\",\n" +
+                "              \"NORMAL\",\n" +
+                "              \"BELOW NORMAL\",\n" +
+                "              \"IDLE\"\n" +
+                "            ],\n" +
+                "            \"value\": \"NORMAL\",\n" +
+                "            \"default\": \"NORMAL\"\n" +
+                "          }\n" +
+                "        },\n" +
+                "        \"ingestReadingSpeedFactor\": 0,\n" +
+                "        \"appliesToAllChannels\": false\n" +
+                "      }\n" +
+                "    ],\n" +
+                "    \"numberOfCPUs\": 8\n" +
                 "  }\n" +
                 "}"), mapper.readTree(json));
 

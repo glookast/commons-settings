@@ -10,6 +10,7 @@ import com.glookast.commons.settings.groups.media_processor.MediaProcessorGroup;
 import com.glookast.commons.settings.groups.metadata.MetadataSettingsGroup;
 import com.glookast.commons.settings.groups.network.NetworkSettingsGroup;
 import com.glookast.commons.settings.groups.processes_settings.ProcessesSettingsGroup;
+import com.glookast.commons.settings.groups.service_settings.ServiceSettingsGroup;
 import com.glookast.commons.settings.groups.storage_manager.StorageManagerGroup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,5 +42,7 @@ public class Settings {
     private ProcessesSettingsGroup processesSettings;
 
     private StorageManagerGroup storageManager;
+
+    private ServiceSettingsGroup serviceSettings;
 
 }
