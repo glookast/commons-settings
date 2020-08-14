@@ -357,8 +357,7 @@ class SettingsTest {
                 "            \"default\": \"NORMAL\"\n" +
                 "          }\n" +
                 "        },\n" +
-                "        \"ingestReadingSpeedFactor\": 0,\n" +
-                "        \"appliesToAllChannels\": false\n" +
+                "        \"ingestReadingSpeedFactor\": 0\n" +
                 "      }\n" +
                 "    ],\n" +
                 "    \"numberOfCPUs\": 8\n" +

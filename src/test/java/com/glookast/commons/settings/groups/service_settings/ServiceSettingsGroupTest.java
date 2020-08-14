@@ -69,8 +69,75 @@ class ServiceSettingsGroupTest {
                 "          \"value\": \"NORMAL\"\n" +
                 "        }\n" +
                 "      },\n" +
-                "      \"ingestReadingSpeedFactor\": 0,\n" +
-                "      \"appliesToAllChannels\": false\n" +
+                "      \"ingestReadingSpeedFactor\": 0\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"numberOfCPUs\": 4\n" +
+                "}"), mapper.readTree(json));
+
+        ServiceSettingsGroup ServiceSettingsGroupFromJSON = mapper.readValue(json, ServiceSettingsGroup.class);
+        assertNotNull(ServiceSettingsGroupFromJSON);
+        assertEquals(serviceSettingsGroup, ServiceSettingsGroupFromJSON);
+
+    }
+
+    @Test
+    public void toJSON_minimal_single_configuration() throws JsonProcessingException {
+
+        ServiceSettingsChannelConfiguration channelConfiguration = ServiceSettingsChannelConfiguration.builder()
+                .captureConfiguration(ProcessorConfiguration.builder()
+                        .groupAffinity(GroupAffinity.builder()
+                                .selectedValue("Group 0")
+                                .build())
+                        .processorAffinityMask("Default")
+                        .priority(ProcessorPriority.builder()
+                                .selectedValue("NORMAL")
+                                .build())
+                        .build())
+                .ingestConfiguration(ProcessorConfiguration.builder()
+                        .groupAffinity(GroupAffinity.builder()
+                                .selectedValue("Group 0")
+                                .build())
+                        .processorAffinityMask("Default")
+                        .priority(ProcessorPriority.builder()
+                                .selectedValue("NORMAL")
+                                .build())
+                        .build())
+                .build();
+
+        ServiceSettingsGroup serviceSettingsGroup = ServiceSettingsGroup.builder()
+                .channelConfigurations(new TreeSet<>(Collections.singletonList(
+                        channelConfiguration
+                )))
+                .numberOfCPUs(4)
+                .build();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(serviceSettingsGroup);
+        assertNotNull(json);
+
+        assertEquals(mapper.readTree("{\n" +
+                "  \"channelConfigurations\": [\n" +
+                "    {\n" +
+                "      \"captureConfiguration\": {\n" +
+                "        \"groupAffinity\": {\n" +
+                "          \"value\": \"Group 0\"\n" +
+                "        },\n" +
+                "        \"processorAffinityMask\": \"Default\",\n" +
+                "        \"priority\": {\n" +
+                "          \"value\": \"NORMAL\"\n" +
+                "        }\n" +
+                "      },\n" +
+                "      \"ingestConfiguration\": {\n" +
+                "        \"groupAffinity\": {\n" +
+                "          \"value\": \"Group 0\"\n" +
+                "        },\n" +
+                "        \"processorAffinityMask\": \"Default\",\n" +
+                "        \"priority\": {\n" +
+                "          \"value\": \"NORMAL\"\n" +
+                "        }\n" +
+                "      },\n" +
+                "      \"ingestReadingSpeedFactor\": 0\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"numberOfCPUs\": 4\n" +
@@ -185,8 +252,7 @@ class ServiceSettingsGroupTest {
                 "          \"default\": \"NORMAL\"\n" +
                 "        }\n" +
                 "      },\n" +
-                "      \"ingestReadingSpeedFactor\": 0,\n" +
-                "      \"appliesToAllChannels\": false\n" +
+                "      \"ingestReadingSpeedFactor\": 0\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"numberOfCPUs\": 8\n" +
@@ -264,8 +330,7 @@ class ServiceSettingsGroupTest {
                 "          \"value\": \"NORMAL\"\n" +
                 "        }\n" +
                 "      },\n" +
-                "      \"ingestReadingSpeedFactor\": 0,\n" +
-                "      \"appliesToAllChannels\": false\n" +
+                "      \"ingestReadingSpeedFactor\": 0\n" +
                 "    }\n" +
                 "  ],\n" +
                 "  \"numberOfCPUs\": 8\n" +

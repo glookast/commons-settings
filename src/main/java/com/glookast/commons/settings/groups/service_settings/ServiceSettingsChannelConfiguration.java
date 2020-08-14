@@ -12,7 +12,7 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ServiceSettingsChannelConfiguration implements Comparable<ServiceSettingsChannelConfiguration> {
 
-    @NonNull
+    // no channel set means this is a global configuration
     private Integer channel;
 
     @NonNull
@@ -24,12 +24,12 @@ public class ServiceSettingsChannelConfiguration implements Comparable<ServiceSe
     @Builder.Default
     private Integer ingestReadingSpeedFactor = 0;
 
-    @Builder.Default
-    private Boolean appliesToAllChannels = false;
-
     @Override
     public int compareTo(ServiceSettingsChannelConfiguration o) {
-        return Integer.compare(this.channel, o.channel);
+        if (this.channel != null && o.channel != null) {
+            return Integer.compare(this.channel, o.channel);
+        }
+        return 0;
     }
 
 }
