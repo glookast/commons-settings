@@ -208,7 +208,9 @@ class SettingsTest {
                 "  \"processesSettings\": {\n" +
                 "    \"serialControlServiceEnabled\": true,\n" +
                 "    \"SDIPlayerEnabled\": true,\n" +
-                "    \"VTRControllerEnabled\": true\n" +
+                "    \"VTRControllerEnabled\": true,\n" +
+                "    \"SelectableOnGuiEnabled\": true,\n" +
+                "    \"DefaultPlayoutResolution\": \"Resolution #1\"\n" +
                 "  }\n" +
                 "}"), mapper.readTree(json));
 
