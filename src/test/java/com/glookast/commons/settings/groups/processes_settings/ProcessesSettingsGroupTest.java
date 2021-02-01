@@ -22,8 +22,8 @@ class ProcessesSettingsGroupTest {
                 "  \"serialControlServiceEnabled\": false,\n" +
                 "  \"SDIPlayerEnabled\": false,\n" +
                 "  \"VTRControllerEnabled\": false,\n" +
-                "  \"SelectableOnGuiEnabled\": true,\n" +
-                "  \"DefaultPlayoutResolution\": \"Resolution #1\"\n" +
+                "  \"selectableOnGuiEnabled\": true,\n" +
+                "  \"defaultPlayoutResolution\": \"Resolution #1\"\n" +
                 "}"), mapper.readTree(json));
 
         ProcessesSettingsGroup ProcessesSettingsGroupFromJSON = mapper.readValue(json, ProcessesSettingsGroup.class);

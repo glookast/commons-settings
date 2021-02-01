@@ -28,10 +28,10 @@ public class ProcessesSettingsGroup {
     private Boolean vtrControllerEnabled = false;
 
     @Builder.Default
-    @JsonProperty("SelectableOnGuiEnabled")
+    @JsonProperty("selectableOnGuiEnabled")
     private Boolean selectableOnGuiEnabled = true;
 
     @Builder.Default
-    @JsonProperty("DefaultPlayoutResolution")
+    @JsonProperty("defaultPlayoutResolution")
     private String defaultPlayoutResolution = "Resolution #1";
 }
