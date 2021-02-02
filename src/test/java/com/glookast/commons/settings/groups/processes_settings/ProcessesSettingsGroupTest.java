@@ -21,7 +21,9 @@ class ProcessesSettingsGroupTest {
         assertEquals(mapper.readTree("{\n" +
                 "  \"serialControlServiceEnabled\": false,\n" +
                 "  \"SDIPlayerEnabled\": false,\n" +
-                "  \"VTRControllerEnabled\": false\n" +
+                "  \"VTRControllerEnabled\": false,\n" +
+                "  \"selectableOnGuiEnabled\": true,\n" +
+                "  \"defaultPlayoutResolution\": \"Resolution #1\"\n" +
                 "}"), mapper.readTree(json));
 
         ProcessesSettingsGroup ProcessesSettingsGroupFromJSON = mapper.readValue(json, ProcessesSettingsGroup.class);

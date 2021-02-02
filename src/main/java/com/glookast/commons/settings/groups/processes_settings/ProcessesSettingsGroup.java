@@ -16,6 +16,22 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProcessesSettingsGroup {
 
+    public enum PlayoutResolutions {
+        RESOLUTION_1(1),
+        RESOLUTION_2(2);
+
+        private String resId;
+
+        PlayoutResolutions(int res) {
+            resId = Integer.toString(res);
+        }
+
+        @Override
+        public String toString() {
+            return "Resolution #" + resId;
+        }
+    }
+
     @Builder.Default
     @JsonProperty("SDIPlayerEnabled")
     private Boolean sdiPlayerEnabled = false;
@@ -27,4 +43,11 @@ public class ProcessesSettingsGroup {
     @JsonProperty("VTRControllerEnabled")
     private Boolean vtrControllerEnabled = false;
 
+    @Builder.Default
+    @JsonProperty("selectableOnGuiEnabled")
+    private Boolean selectableOnGuiEnabled = true;
+
+    @Builder.Default
+    @JsonProperty("defaultPlayoutResolution")
+    private String defaultPlayoutResolution = PlayoutResolutions.RESOLUTION_1.toString();
 }
