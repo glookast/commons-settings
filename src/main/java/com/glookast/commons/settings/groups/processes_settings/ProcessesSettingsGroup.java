@@ -32,6 +32,16 @@ public class ProcessesSettingsGroup {
         public String toString() {
             return resolution;
         }
+
+        public static PlayoutResolution fromString(String resolutionStr) {
+            for (PlayoutResolution resolution : PlayoutResolution.values()) {
+                if (resolution.toString().equalsIgnoreCase(resolutionStr)) {
+                    return resolution;
+                }
+            }
+            throw new IllegalArgumentException(String.format("No PlayoutResolution found for %s", resolutionStr));
+        }
+
     }
 
 
@@ -53,4 +63,5 @@ public class ProcessesSettingsGroup {
     @Builder.Default
     @JsonProperty("defaultPlayoutResolution")
     private PlayoutResolution defaultPlayoutResolution = PlayoutResolution.RESOLUTION_1;
+
 }
