@@ -3,6 +3,7 @@ package com.glookast.commons.settings.groups.processes_settings;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,21 +17,23 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProcessesSettingsGroup {
 
-    public enum PlayoutResolutions {
-        RESOLUTION_1(1),
-        RESOLUTION_2(2);
+    public enum PlayoutResolution {
+        RESOLUTION_1("Resolution #1"),
+        RESOLUTION_2("Resolution #2");
 
-        private String resId;
+        private final String resolution;
 
-        PlayoutResolutions(int res) {
-            resId = Integer.toString(res);
+        PlayoutResolution(String value) {
+            resolution = value;
         }
 
+        @JsonValue
         @Override
         public String toString() {
-            return "Resolution #" + resId;
+            return resolution;
         }
     }
+
 
     @Builder.Default
     @JsonProperty("SDIPlayerEnabled")
@@ -49,5 +52,5 @@ public class ProcessesSettingsGroup {
 
     @Builder.Default
     @JsonProperty("defaultPlayoutResolution")
-    private String defaultPlayoutResolution = PlayoutResolutions.RESOLUTION_1.toString();
+    private PlayoutResolution defaultPlayoutResolution = PlayoutResolution.RESOLUTION_1;
 }

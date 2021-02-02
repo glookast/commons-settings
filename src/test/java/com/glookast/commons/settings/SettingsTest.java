@@ -193,6 +193,8 @@ class SettingsTest {
                 .serialControlServiceEnabled(true)
                 .sdiPlayerEnabled(true)
                 .vtrControllerEnabled(true)
+                .selectableOnGuiEnabled(true)
+                .defaultPlayoutResolution(ProcessesSettingsGroup.PlayoutResolution.RESOLUTION_1)
                 .build();
 
         Settings settings = Settings.builder()
