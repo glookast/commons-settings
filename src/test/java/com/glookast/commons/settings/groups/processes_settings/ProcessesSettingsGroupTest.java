@@ -11,6 +11,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ProcessesSettingsGroupTest {
 
     @Test
+    public void test_reverse_playout_resolution_mapping() {
+
+        String resolution1String = ProcessesSettingsGroup.PlayoutResolution.RESOLUTION_1.toString();
+        ProcessesSettingsGroup.PlayoutResolution.fromString(resolution1String);
+
+    }
+
+    @Test
+    public void test_reverse_playout_resolution_mapping_fails_on_unknown_mapping() {
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            String resolution1String = "dummy";
+            ProcessesSettingsGroup.PlayoutResolution.fromString(resolution1String);
+        });
+
+    }
+
+    @Test
     public void fromJSON() throws JsonProcessingException {
 
         String json = "{\n" +
